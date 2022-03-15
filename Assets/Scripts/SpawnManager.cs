@@ -5,10 +5,10 @@ using System.IO;
 
 public class SpawnManager : MonoBehaviour
 {
-    [SerializeField] private GameObject asteroidPrefab;
+    [SerializeField] private List<GameObject> asteroidPrefabs;
     private FileStream dataFileStream;
     private string dataFileName;
-    private int timeLapsed;
+    public static int timeLapsed {get; private set;}
     private int reportInterval;
     private const float SPAWN_INTERVAL = 0.3f;
     private const int MAX_BODIES_IN_SCENE = 60;
@@ -17,6 +17,7 @@ public class SpawnManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+      selectAsteroid();
         // Creates a new data file based o ndate and time
         string dateTime = System.DateTime.Now.ToString("dd-MMM_hh-mm-tt");
         dataFileName = "Saved_data_" + dateTime + ".csv";
@@ -44,7 +45,8 @@ public class SpawnManager : MonoBehaviour
         // Instantiates asteroid and writes new asteroid data to file
         if(Body.Bodies.Count < MAX_BODIES_IN_SCENE && calculateMassInScene() < MAX_MASS_IN_UNIVERSE)
         {
-            Instantiate(asteroidPrefab, spawnPosition, asteroidPrefab.transform.rotation);
+          GameObject ast = selectAsteroid();
+            Instantiate(ast, spawnPosition, ast.transform.rotation);
         }
     }
 
@@ -73,7 +75,7 @@ public class SpawnManager : MonoBehaviour
         float mostMassive = 0;
         float largestRadius = 0;
         float sumOfRadii = 0;
-        
+
         foreach (Body body in Body.Bodies)
         {
             if (body.gameObject.CompareTag("Asteroid"))
@@ -103,9 +105,15 @@ public class SpawnManager : MonoBehaviour
                          asteroidsInUniverse.ToString() + "," +
                          totalMass.ToString() + "," +
                          averageMass.ToString() + "," +
-                         mostMassive.ToString() + "," + 
+                         mostMassive.ToString() + "," +
                          averageRadius.ToString() + "," +
                          largestRadius.ToString());
         }
+    }
+
+    private GameObject selectAsteroid()
+    {
+      int prefabNum = Mathf.RoundToInt(Random.value * (asteroidPrefabs.Count-1));
+      return(asteroidPrefabs[prefabNum]);
     }
 }

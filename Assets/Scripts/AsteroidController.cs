@@ -7,7 +7,7 @@ public class AsteroidController : MonoBehaviour
     [SerializeField] private GameObject earth;
     private Rigidbody rb;
     private Vector3 initialForce;
-    private const float MASS_OF_DUST = 1;
+    private const float MASS_OF_DUST = 0.01f;
     private const float SCALE = 1;
     private const float MIN_INITIAL_MASS = 9.9f;
     private const float MAX_INITIAL_MASS = 10.1f;
@@ -32,7 +32,7 @@ public class AsteroidController : MonoBehaviour
         {
             ChangeInMass(MASS_OF_DUST);  // Adds dust to asteroid
         }
-        
+
         if (rb.mass > 100000)
         {
             GetComponent<TrailRenderer>().enabled = true;
@@ -60,7 +60,7 @@ public class AsteroidController : MonoBehaviour
             {
                 Destroy(gameObject);
             }
-        } 
+        }
     }
 
     private void ChangeInMass(float massOther)

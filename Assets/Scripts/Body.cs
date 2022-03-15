@@ -45,7 +45,7 @@ public class Body : MonoBehaviour
 
         if (radius > 0)
         {
-            float gravity = GRAVITY * rb.mass * rbOfOther.mass / (radius * radius);
+            float gravity = GRAVITY * (rb.mass * rbOfOther.mass / (radius * radius));
             Vector3 gravityVector = direction.normalized * gravity;
 
             rbOfOther.AddForce(gravityVector);
