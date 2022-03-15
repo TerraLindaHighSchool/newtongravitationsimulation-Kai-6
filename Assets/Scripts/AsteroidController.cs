@@ -7,7 +7,7 @@ public class AsteroidController : MonoBehaviour
     [SerializeField] private GameObject earth;
     private Rigidbody rb;
     private Vector3 initialForce;
-    private const float MASS_OF_DUST = 0.01f;
+    private const float MASS_OF_DUST = 1f;
     private const float SCALE = 1;
     private const float MIN_INITIAL_MASS = 9.9f;
     private const float MAX_INITIAL_MASS = 10.1f;
